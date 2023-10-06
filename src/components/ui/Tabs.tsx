@@ -1,4 +1,4 @@
-import { Tabs as TabsA, TabProps as TabPropsA } from "antd";
+import { Tabs as TabsA, TabsProps as TabPropsA } from "antd";
 
 export const Tabs = (props: TabPropsA) => {
   return <TabsA {...props} />;

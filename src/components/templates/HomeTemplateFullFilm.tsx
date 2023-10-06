@@ -20,7 +20,7 @@ export const HomeTemplateFullFilm = () => {
   if (isFetchingMovieList) {
     return (
       <div className="flex justify-evenly flex-wrap">
-        {[...Array(12)].map((value, index) => {
+        {[...Array(12)].map(( index) => {
           return (
             <Card className="!w-[350px] !mt-20" key={index}>
               <Skeleton.Image className="!w-full !h-[250px]" />

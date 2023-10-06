@@ -8,52 +8,52 @@ import style from "../../assets/HomeTemplate.module.css";
 import { Movie } from "types";
 
 export const HomeTemplateUpcoming = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { movieList, isFetchingMovieList } = useSelector(
-    (state: RootState) => state.quanLyPhim
-  );
+   const dispatch = useAppDispatch();
+   const navigate = useNavigate();
+   const { movieList, isFetchingMovieList } = useSelector(
+      (state: RootState) => state.quanLyPhim
+   );
 
-  useEffect(() => {
-    dispatch(getMovieListThunk());
-  }, [dispatch]);
+   useEffect(() => {
+      dispatch(getMovieListThunk());
+   }, [dispatch]);
 
-  if (isFetchingMovieList) {
-    return (
+   if (isFetchingMovieList) {
+      return (
+         <div className="flex justify-evenly flex-wrap">
+            {[...Array(12)].map((index) => {
+               return (
+                  <Card className="!w-[350px] !mt-20" key={index}>
+                     <Skeleton.Image className="!w-full !h-[250px]" />
+                     <Skeleton.Input className="!w-full mt-16" />
+                     <Skeleton.Input className="!w-full mt-16" />
+                  </Card>
+               );
+            })}
+         </div>
+      );
+   }
+
+   return (
       <div className="flex justify-evenly flex-wrap">
-        {[...Array(12)].map((value, index) => {
-          return (
-            <Card className="!w-[350px] !mt-20" key={index}>
-              <Skeleton.Image className="!w-full !h-[250px]" />
-              <Skeleton.Input className="!w-full mt-16" />
-              <Skeleton.Input className="!w-full mt-16" />
-            </Card>
-          );
-        })}
+         {movieList?.map((movie: Movie) =>
+            movie.sapChieu ? (
+               <Card
+                  key={movie.maPhim}
+                  onClick={() => navigate(`/detail?maPhim=${movie.maPhim}`)}
+                  hoverable
+                  className={`!mt-20 Card ${style.Card}`}
+                  cover={<img alt="example" src={movie.hinhAnh} />}
+               >
+                  <Card.Meta
+                     title={movie.tenPhim}
+                     description={movie.moTa.substring(0, 30)}
+                  />
+               </Card>
+            ) : (
+               ""
+            )
+         )}
       </div>
-    );
-  }
-
-  return (
-    <div className="flex justify-evenly flex-wrap">
-      {movieList?.map((movie: Movie) =>
-        movie.sapChieu ? (
-          <Card
-            key={movie.maPhim}
-            onClick={() => navigate(`/detail?maPhim=${movie.maPhim}`)}
-            hoverable
-            className={`!mt-20 Card ${style.Card}`}
-            cover={<img alt="example" src={movie.hinhAnh} />}
-          >
-            <Card.Meta
-              title={movie.tenPhim}
-              description={movie.moTa.substring(0, 30)}
-            />
-          </Card>
-        ) : (
-          ""
-        )
-      )}
-    </div>
-  );
+   );
 };

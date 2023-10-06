@@ -1,11 +1,11 @@
 import {  createSlice } from "@reduxjs/toolkit";
-import { UpdateUser, UserByAccessToken, UserLogin } from "types";
+import { UpdateUser, UpdateUserResponse, UserByAccessToken, UserLogin } from "types";
 import { UpdateAccountThunk, getUserByAccessTokenThunk, loginThunk } from ".";
 import { getAccessToken } from "utils";
 
 type QuanLyNguoiDungInitialState = {
   accessToken?: string;
-  userLogin?: UserLogin | UserByAccessToken | UpdateUser;
+  userLogin?: UpdateUser | UserLogin | UserByAccessToken | UpdateUserResponse;
   isFetchingLogin?: boolean;
   isUpdatingUser: boolean;
 };

@@ -12,11 +12,10 @@ function Banner() {
     dispatch(getBannerList());
   }, [dispatch]);
 
-  const onChange = (currentSlide: number) => {
-  };
+ 
 
   return (
-    <Carousel afterChange={onChange}>
+    <Carousel >
       {bannerList?.map((value, index) => (
         <div key={index} style={{ height: "200px" }}>
           <img
