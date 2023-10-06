@@ -11,7 +11,7 @@ const AnyReactComponent: React.FC<AnyReactComponentProps> = ({ text }) => (
   <div>{text}</div>
 );
 
-export default function SimpleMap() {
+export function SimpleMap() {
   const defaultProps = {
     center: {
       lat: 10.8538211,

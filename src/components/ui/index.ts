@@ -8,4 +8,4 @@ export * from "./Card";
 export * from "./Skeleton";
 export * from "./Tabs";
 export * from "./Banner";
-export * from "./Simplemap";
+export * from "./SimpleMap"

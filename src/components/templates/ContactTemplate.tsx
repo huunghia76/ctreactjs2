@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import SimpleMap from "components/ui/Simplemap";
+import { SimpleMap } from "components";
 
 export const ContactTemplate = () => {
   return (
