@@ -5,14 +5,15 @@ import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AccountSchema, AccountSchemaType } from "schema/AccountSchema";
 import { useAppDispatch } from "store";
-import { UpdateAccountThunk } from "store/quanLyNguoiDung";
 import styled from "styled-components";
 import { handleError } from "utils";
 import { toast } from "react-toastify";
-import { UpdateUser } from "types";
+import { quanLyNguoiDungServices } from "services";
+import { getUserByAccessTokenThunk } from 'store/quanLyNguoiDung/thunk';
 
 export const AccountInfo = () => {
    const { user } = useAuth();
+   const dispatch = useAppDispatch();
    const {
       reset,
       register,
@@ -22,26 +23,6 @@ export const AccountInfo = () => {
       resolver: zodResolver(AccountSchema),
       mode: "onChange",
    });
-   const dispatch = useAppDispatch();
-
-   const onSubmit: SubmitHandler<AccountSchemaType> = (value) => {
-      const { taiKhoan, email, soDt, maNhom, hoTen } = value;
-      const updateData: UpdateUser = {
-         taiKhoan,
-         email,
-         soDt,
-         maNhom,
-         maLoaiNguoiDung: "KhachHang",
-         hoTen,
-      };
-      dispatch(UpdateAccountThunk(updateData))
-         .unwrap()
-         .then(() => toast.success("Cập nhật thành công!"))
-         .catch((err) => {
-            return handleError(err);
-         });
-   };
-
    useEffect(() => {
       reset({
          ...user,
@@ -49,6 +30,17 @@ export const AccountInfo = () => {
       });
    }, [user, reset]);
 
+   const onSubmit: SubmitHandler<AccountSchemaType> = async (values) => {
+      try {
+         await quanLyNguoiDungServices.updateAccount(values)
+         toast.success("Cập nhật thành công!");
+
+         dispatch(getUserByAccessTokenThunk());
+      } catch (errors) {
+         return handleError(errors);
+      }
+      
+   };
    return (
       <form onSubmit={handleSubmit(onSubmit)}>
          <p className="text-20 font-600">Thông tin tài khoản</p>
